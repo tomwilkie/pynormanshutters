@@ -14,6 +14,7 @@ SERVICE_NAME_PREFIX = "NORMANHUB_"
 # Confirmed empirically: fullopen() drives all shutters to position 37.
 FULLY_OPEN_POSITION = 37
 
+
 def discover(wait_secs=1):
     addrs = queue.Queue(maxsize=0)
 
@@ -45,13 +46,15 @@ def discover(wait_secs=1):
 
     return addr
 
+
 def login(addr):
     body = {
         "password": DEFAULT_PASSWORD,
         "app_version": "2.11.21",
     }
-    r = requests.post(f"http://%s/cgi-bin/cgi/GatewayLogin" % addr, headers=HEADERS, json=body)
+    r = requests.post("http://%s/cgi-bin/cgi/GatewayLogin" % addr, headers=HEADERS, json=body)
     return Client(addr, r.cookies.get("Session"))
+
 
 class Client:
     def __init__(self, addr, session):
@@ -60,27 +63,27 @@ class Client:
         self.session.cookies.set("Session", session)
 
     def get_window_info(self):
-        url = f"http://%s/cgi-bin/cgi/getWindowInfo" % self.addr
+        url = "http://%s/cgi-bin/cgi/getWindowInfo" % self.addr
         response = self.session.post(url, headers=HEADERS)
         return response.json()
 
     def get_room_info(self):
-        url = f"http://%s/cgi-bin/cgi/getRoomInfo" % self.addr
+        url = "http://%s/cgi-bin/cgi/getRoomInfo" % self.addr
         response = self.session.post(url, headers=HEADERS)
         return response.json()
 
     def get_scene_info(self):
-        url = f"http://%s/cgi-bin/cgi/getSceneInfo" % self.addr
+        url = "http://%s/cgi-bin/cgi/getSceneInfo" % self.addr
         response = self.session.post(url, headers=HEADERS)
         return response.json()
 
     def get_schedule_info(self):
-        url = f"http://%s/cgi-bin/cgi/getScheduleInfo" % self.addr
+        url = "http://%s/cgi-bin/cgi/getScheduleInfo" % self.addr
         response = self.session.post(url, headers=HEADERS)
         return response.json()
 
     def _remote_control(self, body: dict):
-        url = f"http://%s/cgi-bin/cgi/RemoteControl" % self.addr
+        url = "http://%s/cgi-bin/cgi/RemoteControl" % self.addr
         response = self.session.post(url, headers=HEADERS, json=body)
         return response.json()
 
@@ -101,6 +104,7 @@ class Client:
     def set_window_position(self, window_id: int, position: int):
         """Set slat position (0-FULLY_OPEN_POSITION) for a single window by its Id."""
         return self._remote_control({"type": "window", "action": 1, "id": window_id, "position": position})
+
 
 # CLI implementation
 def main():
@@ -150,6 +154,7 @@ def main():
             parser.error("--id and --position required for set_window_position")
         result = client.set_window_position(args.id, args.position)
     print(json.dumps(result, indent=4))
+
 
 if __name__ == "__main__":
     main()
