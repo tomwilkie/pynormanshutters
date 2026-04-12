@@ -20,10 +20,10 @@ jobs:
         run: pip install -r requirements.txt -r requirements-dev.txt
 
       - name: Check syntax
-        run: python -m py_compile main.py
+        run: python -m py_compile pynormanshutters.py
 
       - name: Lint
-        run: flake8 main.py tests/
+        run: flake8 pynormanshutters.py tests/
 
       - name: Test
         run: pytest

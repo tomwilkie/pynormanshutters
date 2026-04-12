@@ -2,8 +2,8 @@ from unittest.mock import MagicMock, patch
 
 import pytest
 
-import main
-from main import Client, login, FULLY_OPEN_POSITION
+import pynormanshutters
+from pynormanshutters import Client, login, FULLY_OPEN_POSITION
 
 
 class TestClient:
@@ -24,7 +24,7 @@ class TestClient:
 
         self.client.session.post.assert_called_once_with(
             "http://192.168.1.100/cgi-bin/cgi/getWindowInfo",
-            headers=main.HEADERS,
+            headers=pynormanshutters.HEADERS,
         )
         assert result == expected
 
@@ -36,7 +36,7 @@ class TestClient:
 
         self.client.session.post.assert_called_once_with(
             "http://192.168.1.100/cgi-bin/cgi/getRoomInfo",
-            headers=main.HEADERS,
+            headers=pynormanshutters.HEADERS,
         )
         assert result == expected
 
@@ -48,7 +48,7 @@ class TestClient:
 
         self.client.session.post.assert_called_once_with(
             "http://192.168.1.100/cgi-bin/cgi/getSceneInfo",
-            headers=main.HEADERS,
+            headers=pynormanshutters.HEADERS,
         )
         assert result == expected
 
@@ -60,7 +60,7 @@ class TestClient:
 
         self.client.session.post.assert_called_once_with(
             "http://192.168.1.100/cgi-bin/cgi/getScheduleInfo",
-            headers=main.HEADERS,
+            headers=pynormanshutters.HEADERS,
         )
         assert result == expected
 
@@ -73,7 +73,7 @@ class TestClient:
 
         self.client.session.post.assert_called_once_with(
             "http://192.168.1.100/cgi-bin/cgi/RemoteControl",
-            headers=main.HEADERS,
+            headers=pynormanshutters.HEADERS,
             json=body,
         )
         assert result == expected
@@ -134,7 +134,7 @@ class TestLogin:
             mock_post.assert_called_once()
             call_args = mock_post.call_args
             assert "192.168.1.50" in call_args[0][0]
-            assert call_args[1]["json"]["password"] == main.DEFAULT_PASSWORD
+            assert call_args[1]["json"]["password"] == pynormanshutters.DEFAULT_PASSWORD
 
     def test_login_returns_client_with_session(self):
         mock_response = MagicMock()
