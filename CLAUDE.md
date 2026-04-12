@@ -13,7 +13,7 @@ pip install -r requirements.txt -r requirements-dev.txt
 Always run lint and tests before committing:
 
 ```bash
-flake8 main.py tests/
+flake8 pynormanshutters.py tests/
 pytest
 ```
 
