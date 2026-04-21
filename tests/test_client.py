@@ -93,14 +93,14 @@ class TestClient:
         with patch.object(self.client, "_remote_control", return_value={}) as mock_rc:
             self.client.open_window(42)
             mock_rc.assert_called_once_with(
-                {"type": "window", "action": 1, "id": 42, "position": FULLY_OPEN_POSITION}
+                {"type": "fullopen", "action": 4, "id": 42}
             )
 
     def test_close_window(self):
         with patch.object(self.client, "_remote_control", return_value={}) as mock_rc:
             self.client.close_window(42)
             mock_rc.assert_called_once_with(
-                {"type": "window", "action": 1, "id": 42, "position": 100}
+                {"type": "fullclose", "action": 4, "id": 42}
             )
 
     def test_set_window_position(self):
