@@ -13,6 +13,7 @@ SERVICE_NAME_PREFIX = "NORMANHUB_"
 # The hub reports this position value when shutters are fully open.
 # Confirmed empirically: fullopen() drives all shutters to position 37.
 FULLY_OPEN_POSITION = 37
+FULLY_CLOSED_POSITION = 100
 
 
 def discover(wait_secs=1):
@@ -99,7 +100,7 @@ class Client:
 
     def close_window(self, window_id: int):
         """Close a single window by its Id (from get_window_info)."""
-        return self._remote_control({"type": "window", "action": 1, "id": window_id, "position": 0})
+        return self._remote_control({"type": "window", "action": 1, "id": window_id, "position": FULLY_CLOSED_POSITION})
 
     def set_window_position(self, window_id: int, position: int):
         """Set slat position (0-FULLY_OPEN_POSITION) for a single window by its Id."""

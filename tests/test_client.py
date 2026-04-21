@@ -100,7 +100,7 @@ class TestClient:
         with patch.object(self.client, "_remote_control", return_value={}) as mock_rc:
             self.client.close_window(42)
             mock_rc.assert_called_once_with(
-                {"type": "window", "action": 1, "id": 42, "position": 0}
+                {"type": "window", "action": 1, "id": 42, "position": 100}
             )
 
     def test_set_window_position(self):
