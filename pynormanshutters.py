@@ -96,11 +96,11 @@ class Client:
 
     def open_window(self, window_id: int):
         """Open a single window by its Id (from get_window_info)."""
-        return self._remote_control({"type": "window", "action": 1, "id": window_id, "position": FULLY_OPEN_POSITION})
+        return self._remote_control({"type": "fullopen", "action": 4, "id": window_id})
 
     def close_window(self, window_id: int):
         """Close a single window by its Id (from get_window_info)."""
-        return self._remote_control({"type": "window", "action": 1, "id": window_id, "position": FULLY_CLOSED_POSITION})
+        return self._remote_control({"type": "fullclose", "action": 4, "id": window_id})
 
     def set_window_position(self, window_id: int, position: int):
         """Set slat position (0-FULLY_OPEN_POSITION) for a single window by its Id."""
